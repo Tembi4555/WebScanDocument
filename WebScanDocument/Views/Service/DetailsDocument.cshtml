@@ -1,0 +1,112 @@
+﻿@model WebScanDocument.Models.ListOfDocument
+
+@{
+    ViewBag.Title = "Детали документа";
+}
+
+<h2>Детали документа</h2>
+
+<div>
+    <h4>Документ @Html.DisplayFor(model => model.Id)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NameDocument)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameDocument)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeriesDocument)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeriesDocument)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumderDocument)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumderDocument)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfDocument.TypeOfDoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfDocument.TypeOfDoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Worker.FIO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Worker.FIO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IssuedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IssuedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WhenIssued)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WhenIssued)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartValidity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartValidity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StopValidity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StopValidity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfPages)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfPages)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EditingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EditingDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "EditDocument", new { id = Model.Id }) |
+    @Html.ActionLink("Вернуться к списку документов", "ListDocuments")
+</p>

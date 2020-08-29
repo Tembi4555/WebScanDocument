@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebScanDocument.Models.Worker>
+
+@{
+    ViewBag.Title = "Список работников";
+}
+
+<h2>Список работников</h2>
+
+<div>
+    @using (Ajax.BeginForm("Search", new AjaxOptions { UpdateTargetId = "results" }))
+    {
+        <label for="Search">Поиск по ФИО и табельному номеру</label>
+        <input type="text" name="name" />
+        <input type="submit" value="Поиск" />
+    }
+    <div id="results"></div>
+</div>
+
+<p>
+    @Html.ActionLink("Добавить работника", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PersNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FIO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FIO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfBirth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Position)
+        </td>
+        <td>
+            @Html.ActionLink("Изменить данные о работнике", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Удалить работника", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+@Scripts.Render("~/scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")

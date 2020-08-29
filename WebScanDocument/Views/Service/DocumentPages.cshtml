@@ -1,0 +1,92 @@
+﻿@model IEnumerable<RegisterOfDocPage>
+@using WebScanDocument.Models
+
+@{
+    ViewBag.Title = "Список страниц документа";
+}
+
+<h2>Список страниц для документа </h2>
+<div>
+    @using (Html.BeginForm("DocumentPages", "Service", FormMethod.Post))
+    {
+        <div>
+            <form method="post" action="/Service/DocumentPages">
+                <table>
+                    <tr>
+                        <td>Актуальность: </td>
+                        <td> @Html.DropDownList("actual",
+                            new[] { new SelectListItem() { Text = "Актуальная", Value = "true" },
+                            new SelectListItem() { Text = "Неактуальная", Value = "false" }})</td>
+                        <td><button name="action" value="Фильтр">Фильтр</button> </td>
+                        <td><button name="action" value="Сбросить">Сбросить</button> </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    }
+</div>
+<p>
+    @Html.ActionLink("Вернуться к списку документов", "ListDocuments")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ListOfDocumentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PageNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Relevance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartRelevance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StopRelevance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScanName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListOfDocument.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PageNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Relevance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartRelevance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StopRelevance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ScanName)
+        </td>
+        <td>
+            @if (item.ScanName != null)
+            {
+                <a href="/Service/Download/@item.Id">Скачать</a>
+            }
+            else
+            {
+                <p>Пусто</p>
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "EditPage", new { id=item.Id }) |
+            @Html.ActionLink("Удалить страницу", "DeletePage", new { id=item.Id })          
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebScanDocument.Models.Worker>
+
+<div id="searchresults">
+    <h3>Результат поиска</h3>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PersNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FIO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+        </tr>
+        @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FIO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.ActionLink("Изменить", "Edit", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,42 @@
+﻿@model TypeOfDocument
+@using WebScanDocument.Models
+@{
+    ViewBag.Title = "Виды документов";
+}
+<h2>Виды документов</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Новый вид документа</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DocumentTypeCode)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DocumentTypeCode)
+            @Html.ValidationMessageFor(model => model.DocumentTypeCode)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TypeOfDoc)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TypeOfDoc)
+            @Html.ValidationMessageFor(model => model.TypeOfDoc)
+        </div>
+
+        <p><input type="submit" value="Учесть" /></p>
+    </fieldset>
+}
+<table>
+    @foreach (TypeOfDocument item in ViewBag.TypeOfDocuments)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.DocumentTypeCode</td>
+            <td>@item.TypeOfDoc</td>
+            <td>@Html.ActionLink("Удалить", "DeleteTypeOfDocument", new { id = item.Id })</td>
+            <td>@Html.ActionLink("Редактировать", "EditTypeOfDocument", new { id = item.Id })</td>
+        </tr>
+    }
+</table>

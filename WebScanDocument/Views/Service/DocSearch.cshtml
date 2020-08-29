@@ -1,0 +1,44 @@
+﻿@model IEnumerable<WebScanDocument.Models.ListOfDocument>
+
+<div id="searchresults">
+    <h3>Результат поиска</h3>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameDocument)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeriesDocument)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumderDocument)
+            </th>
+        </tr>
+        @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameDocument)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeriesDocument)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumderDocument)
+                </td>
+                <td>
+                    @Html.ActionLink("Изменить", "EditDocument", new { id = item.Id }) |
+                    @Html.ActionLink("Детали", "DetailsDocument", new { id = item.Id }) |
+                    @Html.ActionLink("Удалить", "DeleteDocument", new { id = item.Id }) |
+                    @Html.ActionLink("Постраничный просмотр", "", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
