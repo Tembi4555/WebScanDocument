@@ -303,10 +303,12 @@ namespace WebScanDocument.Controllers
             string filename = filenameForResult;
             outputDocument.Save(filename);
             // ...and start a viewer.
-            Process.Start(filename);
-            
+            //Process.Start(filename);
+            string contentType = "application/pdf";
+            return File(filename, contentType, filename);
 
-            return RedirectToAction("ListDocuments");
+
+            //return RedirectToAction("ListDocuments");
         }
 
         #endregion
@@ -427,7 +429,8 @@ namespace WebScanDocument.Controllers
                     // Получаем расширение
                     string ext = error.FileName.Substring(error.FileName.LastIndexOf('.'));
                     // сохраняем файл по определенному пути на сервере
-                    string path = current.ToString("dd.mm.yyyy hh:mm:ss").Replace(":", "_").Replace("/", ".") + ext;
+                    string path = current.ToString("dd.mm.yyyy hh:mm:ss").Replace(":", "_")
+                        .Replace("/", ".") + ext;
                     error.SaveAs(Server.MapPath("~/Files/" + path));
                     rodp.ScanName = path;
                 }
@@ -441,7 +444,8 @@ namespace WebScanDocument.Controllers
         public ActionResult DeletePage(int id)
         {
             RegisterOfDocPage rListDoc = db.RegisterOfDocPages.Where(r => r.Id == id).FirstOrDefault();
-            ListOfDocument listOfDoc = db.ListOfDocuments.Where(l => l.Id == rListDoc.ListOfDocumentId).FirstOrDefault();
+            ListOfDocument listOfDoc = db.ListOfDocuments.Where(l => l.Id == rListDoc
+                .ListOfDocumentId).FirstOrDefault();
             RegisterOfDocPage rodp = db.RegisterOfDocPages.Find(id);
 
             db.RegisterOfDocPages.Remove(rodp);
