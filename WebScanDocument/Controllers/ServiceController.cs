@@ -198,6 +198,7 @@ namespace WebScanDocument.Controllers
         /// </summary>
         public ActionResult DeleteDocument(int id)
         {
+            // Блок удаления pdf файла из директории
             var countId = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).Count();
             var rodp = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).ToList();
             var dir = AppDomain.CurrentDomain.BaseDirectory + "\\Files\\";
@@ -221,7 +222,7 @@ namespace WebScanDocument.Controllers
                 }
             }
             
-
+            //Удаление записи из БД
             ListOfDocument listOfDoc = db.ListOfDocuments.Find(id);
 
             db.ListOfDocuments.Remove(listOfDoc);
@@ -254,6 +255,12 @@ namespace WebScanDocument.Controllers
         public ActionResult ConcatenateDocument(int id)
         {
             var countId = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).Count();
+            if (countId == 0)
+            {
+                
+                return RedirectToAction("ListDocuments");
+            }
+                
             var rodp = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).ToList();
             var dir = AppDomain.CurrentDomain.BaseDirectory + "\\Files\\";
             string[] files = new string[countId];

@@ -52,10 +52,12 @@ namespace WebScanDocument.Models
 
         [Display(Name = "Табельный номер работника")]
         public int? WorkerId { get; set; }
+
         public Worker Worker { get; set; }
 
         [Display(Name = "Вид длокумента")]
         public int? TypeOfDocumentId { get; set; }
+
         public TypeOfDocument TypeOfDocument { get; set; }
     }
 }
