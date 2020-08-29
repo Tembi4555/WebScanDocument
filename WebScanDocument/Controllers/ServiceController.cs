@@ -198,49 +198,34 @@ namespace WebScanDocument.Controllers
         /// </summary>
         public ActionResult DeleteDocument(int id)
         {
-            //var countId = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).Count();
-            //var rodp = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).ToList();
-            //var dir = AppDomain.CurrentDomain.BaseDirectory + "\\Files\\";
-            //string[] files = new string[countId];
-            //string[] filesFullName = new string[countId];
-            //int i = 0;
-            //foreach (RegisterOfDocPage scanName in rodp)
-            //{
-            //    files[i] = scanName.ScanName;
-            //    filesFullName[i] = dir + files[i];
-            //    i++;
-            //}
+            var countId = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).Count();
+            var rodp = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).ToList();
+            var dir = AppDomain.CurrentDomain.BaseDirectory + "\\Files\\";
+            string[] files = new string[countId];
+            int i = 0;
+            foreach (RegisterOfDocPage scanName in rodp)
+            {
+                files[i] = scanName.ScanName;
+                i++;
+            }
 
-            //var filenameForResult = AppDomain.CurrentDomain.BaseDirectory + "\\Files\\result.pdf";
+            DirectoryInfo dir1 = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "\\Files\\");
+            int j = 0;
+            for (int k = 0; k < countId; k++)
+            {
+                foreach (FileInfo file in dir1.GetFiles())
+                {
+                    if (file.Name == files[k])
+                        file.Delete();
+                    j++;
+                }
+            }
+            
 
             ListOfDocument listOfDoc = db.ListOfDocuments.Find(id);
-            //var rodpId = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).ToList();
-            //var countId = db.RegisterOfDocPages.Where(r => r.ListOfDocumentId == id).Count();
-            ////RegisterOfDocPage rodp = db.RegisterOfDocPages.Find(rodpId);
-            //RegisterOfDocPage[] rodp = new RegisterOfDocPage[countId];
-            //for (int k = 0; k < countId; k++ )
-            //{
-            //    rodp[k] = db.RegisterOfDocPages.Find(r=>r.);
-            //}
 
-            //string[] nameFile = new string[countId];
-            //int i = 0;
-            //foreach (RegisterOfDocPage scanName in rodp)
-            //{
-            //    nameFile[i] = scanName.ScanName;
-            //    i++;
-            //}
             db.ListOfDocuments.Remove(listOfDoc);
             db.SaveChanges();
-
-            //DirectoryInfo dir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "\\Files\\");
-            //int j = 0;
-            //foreach (FileInfo file in dir.GetFiles())
-            //{
-            //    if (file.Name == nameFile[j])
-            //        file.Delete();
-            //    j++;
-            //}
 
             return RedirectToAction("ListDocuments");
         }
@@ -306,9 +291,6 @@ namespace WebScanDocument.Controllers
             //Process.Start(filename);
             string contentType = "application/pdf";
             return File(filename, contentType, filename);
-
-
-            //return RedirectToAction("ListDocuments");
         }
 
         #endregion
