@@ -360,6 +360,8 @@ namespace WebScanDocument.Controllers
 
             //если получен файл
             if (error != null)
+            {
+                if (error.ContentType == "application/pdf")
                 {
                     // Получаем расширение
                     string ext = error.FileName.Substring(error.FileName.LastIndexOf('.'));
@@ -368,10 +370,22 @@ namespace WebScanDocument.Controllers
                     error.SaveAs(Server.MapPath("~/Files/" + path));
                     rodp.ScanName = path;
                 }
+                else
+                {
+                    ViewData["error"] = "Вы загрузили файл с расширением отличным от .pdf";
+                    return View("CreatePage");
+                }
 
-             rodp.ListOfDocumentId = listOfDoc.Id;
-             db.RegisterOfDocPages.Add(rodp);
-             db.SaveChanges();
+            }
+            else
+            {
+                ViewData["error"] = "Вы не загрузили скан-образ документа";
+                return View("CreatePage");
+            }
+
+            rodp.ListOfDocumentId = listOfDoc.Id;
+            db.RegisterOfDocPages.Add(rodp);
+            db.SaveChanges();
 
              return RedirectToAction($"DocumentPages/{rodp.ListOfDocumentId}");
         }
@@ -404,16 +418,19 @@ namespace WebScanDocument.Controllers
         public ActionResult EditPage(int id)
         {
             RegisterOfDocPage rodp = db.RegisterOfDocPages.Find(id);
-
+            
             return View(rodp);
         }
 
         [HttpPost]
-        public ActionResult EditPage(RegisterOfDocPage rodp, HttpPostedFileBase error/*, int id*/)
+        public ActionResult EditPage(RegisterOfDocPage rodp, HttpPostedFileBase error)
         {
-                DateTime current = DateTime.Now;
-                //если получен файл
-                if (error != null)
+            string scanName = rodp.ScanName;
+            DateTime current = DateTime.Now;
+            //если получен файл
+            if (error != null)
+            {
+                if (error.ContentType == "application/pdf")
                 {
                     // Получаем расширение
                     string ext = error.FileName.Substring(error.FileName.LastIndexOf('.'));
@@ -423,11 +440,22 @@ namespace WebScanDocument.Controllers
                     error.SaveAs(Server.MapPath("~/Files/" + path));
                     rodp.ScanName = path;
                 }
+                else
+                {
+                    ViewData["error"] = "Вы загрузили файл с расширением отличным от .pdf";
+                    return View("EditPage");
+                }
+            }
+            else
+            {
+                ViewData["error"] = "Вы не загрузили скан-образ документа";
+                return View("EditPage");
+            }
 
-                db.Entry(rodp).State = EntityState.Modified;                
-                db.SaveChanges();
+            db.Entry(rodp).State = EntityState.Modified;                
+            db.SaveChanges();
                
-                return RedirectToAction($"DocumentPages/{rodp.ListOfDocumentId}");
+            return RedirectToAction($"DocumentPages/{rodp.ListOfDocumentId}");
         }
 
         public ActionResult DeletePage(int id)
